@@ -1,0 +1,10 @@
+services:
+    receta_listener:
+            class: AppBundle\EventListener\RecetaListener
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }
+                - { name: doctrine.event_listener, event: preUpdate }
+            arguments: ["@service_container"]
+    receta:
+            class: AppBundle\Services\RecetaService
+            arguments: ["@service_container"]

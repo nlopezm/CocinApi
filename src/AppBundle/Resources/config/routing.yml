@@ -1,0 +1,14 @@
+api_enfermedad:
+    type: rest
+    prefix: enfermedad
+    resource: AppBundle\Controller\EnfermedadController
+    
+api_ingrediente:
+    type: rest
+    prefix: ingrediente
+    resource: AppBundle\Controller\IngredienteController
+    
+api_receta:
+    type: rest
+    prefix: receta
+    resource: AppBundle\Controller\RecetaController
