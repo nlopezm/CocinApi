@@ -44,7 +44,7 @@ class RecetaController extends FOSRestController {
             foreach ($ingredientes as $ingrediente) {
                 $item = new ItemReceta;
                 $form = $this->createForm(ItemRecetaType::class, $item);
-                $form->submit(array('ingrediente' => $ingrediente['id'], 'cantidad' => $ingrediente['cantidad'], 'receta' => $id));
+                $form->submit(array('ingrediente' => $ingrediente['ingrediente'], 'cantidad' => $ingrediente['cantidad'], 'receta' => $id));
                 if ($form->isValid()) {
                     $em->persist($item);
                     $em->flush();
