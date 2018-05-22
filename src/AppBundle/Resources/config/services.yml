@@ -8,3 +8,8 @@ services:
     receta:
             class: AppBundle\Services\RecetaService
             arguments: ["@service_container"]
+    infonutricional_listener:
+            class: AppBundle\EventListener\InfoNutricionalListener
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }
+            arguments: ["@service_container"]
