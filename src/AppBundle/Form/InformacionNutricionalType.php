@@ -12,7 +12,6 @@ class InformacionNutricionalType extends AbstractType {
         $builder
                 ->add('cantidad')
                 ->add('calorias')
-                ->add('grasas_totales')
                 ->add('grasas_saturadas')
                 ->add('grasas_trans')
                 ->add('sodio')
