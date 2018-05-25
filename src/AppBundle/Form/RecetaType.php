@@ -13,6 +13,7 @@ class RecetaType extends AbstractType {
                 ->add('nombre')
                 ->add('descripcion')
                 ->add('dificultad')
+                ->add('personas')
                 ->add('tiempo')
                 ->add('imagenes')
                 ->add('video')

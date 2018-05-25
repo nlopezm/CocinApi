@@ -20,11 +20,10 @@ class RecetaListener {
                 $imagen = $this->container->get("receta")->guardarImagen($imagen);
 
             $entity->setImagenes($imagenes);
-            
-            $video= $entity->getVideo();
-            $video=str_replace("https://www.youtube.com/watch?v=", "", $video);
-            $entity->setVideo('https://www.youtube.com/embed/'.$video);
-            
+
+            $video = $entity->getVideo();
+            $video = str_replace("https://www.youtube.com/watch?v=", "", $video);
+            $entity->setVideo('https://www.youtube.com/embed/' . $video);
         }
 
         $entityManager = $args->getEntityManager();

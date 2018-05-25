@@ -48,6 +48,13 @@ class Receta {
      * @Groups({"Receta"})
      */
     protected $dificultad;
+    
+    /**
+     * @ORM\Column(name="personas", type="integer")
+     * @Expose
+     * @Groups({"Receta"})
+     */
+    protected $personas;
 
     /**
      * @ORM\Column(name="tiempo", type="integer", nullable=false)
@@ -124,6 +131,10 @@ class Receta {
     function getDificultad() {
         return $this->dificultad;
     }
+    
+    function getPersonas() {
+        return $this->personas;
+    }
 
     function getTiempo() {
         return $this->tiempo;
@@ -171,6 +182,10 @@ class Receta {
 
     function setDificultad($dificultad) {
         $this->dificultad = $dificultad;
+    }
+    
+    function setPersonas($personas) {
+        $this->personas = $personas;
     }
 
     function setTiempo($tiempo) {

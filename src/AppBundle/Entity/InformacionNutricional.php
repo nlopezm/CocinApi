@@ -39,77 +39,84 @@ class InformacionNutricional {
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})     
      */
-    protected $calorias;
+    protected $calorias = 0;
 
     /**
      * @ORM\Column(name="grasas_totales", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $grasas_totales;
-
-    /**
-     * @ORM\Column(name="grasas_saturadas", type="integer", nullable=false)
-     * @Expose
-     * @Groups({"InformacionNutricional", "Ingrediente"})
-     */
-    protected $grasas_saturadas;
-
-    /**
-     * @ORM\Column(name="grasas_trans", type="integer", nullable=false)
-     * @Expose
-     * @Groups({"InformacionNutricional", "Ingrediente"})
-     */
-    protected $grasas_trans;
+    protected $grasas_totales = 0;
 
     /**
      * @ORM\Column(name="sodio", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $sodio;
+    protected $sodio = 0;
 
     /**
      * @ORM\Column(name="carbohidratos", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $carbohidratos;
+    protected $carbohidratos = 0;
 
     /**
-     * @ORM\Column(name="azucares", type="integer", nullable=false)
+     * @ORM\Column(name="fibras", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $azucares;
+    protected $fibras = 0;
 
     /**
      * @ORM\Column(name="proteinas", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $proteinas;
+    protected $proteinas = 0;
 
     /**
      * @ORM\Column(name="calcio", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $calcio;
+    protected $calcio = 0;
 
     /**
      * @ORM\Column(name="hierro", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $hierro;
+    protected $hierro = 0;
 
     /**
      * @ORM\Column(name="potacio", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $potacio;
+    protected $potasio = 0;
+
+    /**
+     * @ORM\Column(name="colesterol", type="integer", nullable=false)
+     * @Expose
+     * @Groups({"InformacionNutricional", "Ingrediente"})
+     */
+    protected $colesterol = 0;
+
+    /**
+     * @ORM\Column(name="magnesio", type="integer", nullable=false)
+     * @Expose
+     * @Groups({"InformacionNutricional", "Ingrediente"})
+     */
+    protected $magnesio = 0;
+
+    /**
+     * @ORM\Column(name="zinc", type="integer", nullable=false)
+     * @Expose
+     * @Groups({"InformacionNutricional", "Ingrediente"})
+     */
+    protected $zinc = 0;
 
     function getId() {
         return $this->id;
@@ -123,16 +130,8 @@ class InformacionNutricional {
         return $this->calorias;
     }
 
-    function getGrasasTotales() {
+    function getGrasas_totales() {
         return $this->grasas_totales;
-    }
-
-    function getGrasasSaturadas() {
-        return $this->grasas_saturadas;
-    }
-
-    function getGrasasTrans() {
-        return $this->grasas_trans;
     }
 
     function getSodio() {
@@ -143,8 +142,8 @@ class InformacionNutricional {
         return $this->carbohidratos;
     }
 
-    function getAzucares() {
-        return $this->azucares;
+    function getFibras() {
+        return $this->fibras;
     }
 
     function getProteinas() {
@@ -159,8 +158,20 @@ class InformacionNutricional {
         return $this->hierro;
     }
 
-    function getPotacio() {
-        return $this->potacio;
+    function getPotasio() {
+        return $this->potasio;
+    }
+
+    function getColesterol() {
+        return $this->colesterol;
+    }
+
+    function getMagnesio() {
+        return $this->magnesio;
+    }
+
+    function getZinc() {
+        return $this->zinc;
     }
 
     function setId($id) {
@@ -175,16 +186,8 @@ class InformacionNutricional {
         $this->calorias = $calorias;
     }
 
-    function setGrasasTotales($grasas_totales) {
+    function setGrasas_totales($grasas_totales) {
         $this->grasas_totales = $grasas_totales;
-    }
-
-    function setGrasasSaturadas($grasas_saturadas) {
-        $this->grasas_saturadas = $grasas_saturadas;
-    }
-
-    function setGrasasTrans($grasas_trans) {
-        $this->grasas_trans = $grasas_trans;
     }
 
     function setSodio($sodio) {
@@ -195,8 +198,8 @@ class InformacionNutricional {
         $this->carbohidratos = $carbohidratos;
     }
 
-    function setAzucares($azucares) {
-        $this->azucares = $azucares;
+    function setFibras($fibras) {
+        $this->fibras = $fibras;
     }
 
     function setProteinas($proteinas) {
@@ -211,8 +214,20 @@ class InformacionNutricional {
         $this->hierro = $hierro;
     }
 
-    function setPotacio($potacio) {
-        $this->potacio = $potacio;
+    function setPotasio($potasio) {
+        $this->potasio = $potasio;
+    }
+
+    function setColesterol($colesterol) {
+        $this->colesterol = $colesterol;
+    }
+
+    function setMagnesio($magnesio) {
+        $this->magnesio = $magnesio;
+    }
+
+    function setZinc($zinc) {
+        $this->zinc = $zinc;
     }
 
 }

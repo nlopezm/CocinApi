@@ -12,15 +12,16 @@ class InformacionNutricionalType extends AbstractType {
         $builder
                 ->add('cantidad')
                 ->add('calorias')
-                ->add('grasas_saturadas')
-                ->add('grasas_trans')
+                ->add('grasas_totales')
                 ->add('sodio')
                 ->add('carbohidratos')
-                ->add('azucares')
                 ->add('proteinas')
                 ->add('calcio')
                 ->add('hierro')
-                ->add('potacio')
+                ->add('potasio')
+                ->add('colesterol')
+                ->add('magnesio')
+                ->add('zinc')
         ;
     }
 
