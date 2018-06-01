@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Usuario
@@ -13,6 +14,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
  * @ORM\Table(name="usuarios")
  * @ORM\HasLifecycleCallbacks
  * @ExclusionPolicy("all")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 class Usuario {
 
@@ -33,37 +35,83 @@ class Usuario {
     protected $nombre;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", unique=true)
      * @Expose
      * @Groups({"Usuario"})
      */
-    protected $apellido;
+    protected $mail;
 
-    public function getId() {
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @Expose
+     * @Groups({"Usuario"})
+     */
+    protected $imagen;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Receta")
+     * @ORM\JoinTable(name="usuario_favorito",
+     *      joinColumns={@ORM\JoinColumn(name="receta_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")}
+     *      )
+     * @Expose
+     * @Groups({"Usuario"})
+     */
+    protected $favoritos;
+    
+    function __construct() {
+        $this->favoritos = new ArrayCollection();
+    }
+
+    function getId() {
         return $this->id;
     }
 
-    public function getNombre() {
+    function getNombre() {
         return $this->nombre;
     }
 
-    public function getApellido() {
-        return $this->apellido;
+    function getMail() {
+        return $this->mail;
     }
 
-    public function setId($id) {
+    function getImagen() {
+        return $this->imagen;
+    }
+
+    function getFavoritos() {
+        return $this->favoritos;
+    }
+
+    function setId($id) {
         $this->id = $id;
-        return $this;
     }
 
-    public function setNombre($nombre) {
+    function setNombre($nombre) {
         $this->nombre = $nombre;
-        return $this;
     }
 
-    public function setApellido($apellido) {
-        $this->apellido = $apellido;
+    function setMail($mail) {
+        $this->mail = $mail;
+    }
+
+    function setImagen($imagen) {
+        $this->imagen = $imagen;
+    }
+
+    function setFavoritos($favoritos) {
+        $this->favoritos = $favoritos;
+    }
+    
+    public function addFavorito($item) {
+        $this->favoritos[] = $item;
         return $this;
+    }
+    
+    public function deleteFavorito($id) {
+        foreach ($this->favoritos as $i => $receta)
+            if ($receta->getId() == $id)
+                unset($this->favoritos[$i]);
     }
 
 }

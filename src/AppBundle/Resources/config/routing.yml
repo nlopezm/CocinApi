@@ -12,3 +12,8 @@ api_receta:
     type: rest
     prefix: receta
     resource: AppBundle\Controller\RecetaController
+    
+api_usuario:
+    type: rest
+    prefix: usuario
+    resource: AppBundle\Controller\UsuarioController
