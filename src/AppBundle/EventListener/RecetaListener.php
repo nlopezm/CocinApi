@@ -17,7 +17,8 @@ class RecetaListener {
         if ($entity instanceof Receta) {
             $imagenes = $entity->getImagenes();
             foreach ($imagenes as &$imagen)
-                $imagen = $this->container->get("receta")->guardarImagen($imagen);
+                if (strpos($imagen, 'http') === false)
+                    $imagen = $this->container->get("receta")->guardarImagen($imagen);
 
             $entity->setImagenes($imagenes);
 
@@ -35,7 +36,8 @@ class RecetaListener {
             if ($eventArgs->hasChangedField('imagenes')) {
                 $imagenes = $eventArgs->getNewValue('imagenes');
                 foreach ($imagenes as &$imagen) {
-                    $imagen = $this->container->get("receta")->guardarImagen($imagen);
+                    if (strpos($imagen, 'http') === false)
+                        $imagen = $this->container->get("receta")->guardarImagen($imagen);
                 }
                 $entity->setImagenes($imagenes);
                 $em = $eventArgs->getEntityManager();
