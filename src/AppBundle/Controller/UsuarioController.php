@@ -54,6 +54,19 @@ class UsuarioController extends FOSRestController {
         $em->flush();
         return $usuario;
     }
+
+    /**
+     * @Get("/favorito/{email}")
+     */
+    public function getFavoritosAction($email) {
+        $em = $this->getDoctrine()->getManager();
+
+        $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($email);
+        if (!$usuario)
+            throw new BadRequestHttpException('No existe el usuario');
+
+        return $usuario->getFavoritos();
+    }
     
     /**
      * @QueryParam(name="receta")
