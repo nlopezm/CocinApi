@@ -33,7 +33,7 @@ class Paso {
     protected $nombre;
 
     /**
-     * @ORM\Column(name="descripcion", type="string", length=100, nullable=false)
+     * @ORM\Column(name="descripcion", type="text", nullable=false)
      * @Expose
      * @Groups({"Paso", "Receta"})
      */
