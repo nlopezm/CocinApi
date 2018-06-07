@@ -17,6 +17,7 @@ class InformacionNutricionalType extends AbstractType {
                 ->add('carbohidratos')
                 ->add('proteinas')
                 ->add('calcio')
+                ->add('fibras')
                 ->add('hierro')
                 ->add('potasio')
                 ->add('colesterol')

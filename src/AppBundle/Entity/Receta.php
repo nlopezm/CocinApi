@@ -109,6 +109,13 @@ class Receta {
      * @Groups({"Receta"})
      */
     protected $pasos;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="InformacionNutricional", cascade={"persist"})
+     * @Expose
+     * @Groups({"Receta"})
+     */
+    protected $info_nutricional;
 
     function __construct() {
         $this->ingredientes = new ArrayCollection();
@@ -224,6 +231,14 @@ class Receta {
     public function addPaso($item) {
         $this->pasos[] = $item;
         return $this;
+    }
+    
+    public function getInfoNutricional() {
+        return $this->info_nutricional;
+    }
+    
+    public function setInfoNutricional($info_nutricional) {
+        $this->info_nutricional = $info_nutricional;
     }
 
 }

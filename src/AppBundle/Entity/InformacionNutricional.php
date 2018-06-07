@@ -32,7 +32,7 @@ class InformacionNutricional {
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
-    protected $cantidad;
+    protected $cantidad = 0;
 
     /**
      * @ORM\Column(name="calorias", type="integer", nullable=false)
@@ -91,7 +91,7 @@ class InformacionNutricional {
     protected $hierro = 0;
 
     /**
-     * @ORM\Column(name="potacio", type="integer", nullable=false)
+     * @ORM\Column(name="potasio", type="integer", nullable=false)
      * @Expose
      * @Groups({"InformacionNutricional", "Ingrediente"})
      */
@@ -130,7 +130,7 @@ class InformacionNutricional {
         return $this->calorias;
     }
 
-    function getGrasas_totales() {
+    function getGrasasTotales() {
         return $this->grasas_totales;
     }
 
@@ -183,51 +183,68 @@ class InformacionNutricional {
     }
 
     function setCalorias($calorias) {
-        $this->calorias = $calorias;
+        $this->calorias += $calorias;
     }
 
-    function setGrasas_totales($grasas_totales) {
-        $this->grasas_totales = $grasas_totales;
+    function setGrasasTotales($grasas_totales) {
+        $this->grasas_totales += $grasas_totales;
     }
 
     function setSodio($sodio) {
-        $this->sodio = $sodio;
+        $this->sodio += $sodio;
     }
 
     function setCarbohidratos($carbohidratos) {
-        $this->carbohidratos = $carbohidratos;
+        $this->carbohidratos += $carbohidratos;
     }
 
     function setFibras($fibras) {
-        $this->fibras = $fibras;
+        $this->fibras += $fibras;
     }
 
     function setProteinas($proteinas) {
-        $this->proteinas = $proteinas;
+        $this->proteinas += $proteinas;
     }
 
     function setCalcio($calcio) {
-        $this->calcio = $calcio;
+        $this->calcio += $calcio;
     }
 
     function setHierro($hierro) {
-        $this->hierro = $hierro;
+        $this->hierro += $hierro;
     }
 
     function setPotasio($potasio) {
-        $this->potasio = $potasio;
+        $this->potasio += $potasio;
     }
 
     function setColesterol($colesterol) {
-        $this->colesterol = $colesterol;
+        $this->colesterol += $colesterol;
     }
 
     function setMagnesio($magnesio) {
-        $this->magnesio = $magnesio;
+        $this->magnesio += $magnesio;
     }
 
     function setZinc($zinc) {
-        $this->zinc = $zinc;
+        $this->zinc += $zinc;
+    }
+    
+    public function addAll(InformacionNutricional $info, $cant) {
+        $cantidad = $cant / $info->getCantidad();
+
+        $this->calorias += floor($info->getCalorias() * $cantidad);
+        $this->grasas_totales += floor($info->getGrasasTotales() * $cantidad);
+        $this->sodio += floor($info->getSodio() * $cantidad);
+        $this->carbohidratos += floor($info->getCarbohidratos() * $cantidad);
+        $this->fibras += floor($info->getFibras() * $cantidad);
+        $this->proteinas += floor($info->getProteinas() * $cantidad);
+        $this->calcio += floor($info->getCalcio() * $cantidad);
+        $this->hierro += floor($info->getHierro() * $cantidad);
+        $this->potasio += floor($info->getPotasio() * $cantidad);
+        $this->colesterol += floor($info->getColesterol() * $cantidad);
+        $this->magnesio += floor($info->getMagnesio() * $cantidad);
+        $this->zinc += floor($info->getZinc() * $cantidad);
     }
 
 }

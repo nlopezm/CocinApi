@@ -19,6 +19,7 @@ use AppBundle\Entity\Ingrediente;
 use AppBundle\Form\PasoType;
 use AppBundle\Entity\Paso;
 use AppBundle\Form\ItemRecetaType;
+use AppBundle\Entity\InformacionNutricional;
 
 class RecetaController extends FOSRestController {
 
@@ -40,6 +41,10 @@ class RecetaController extends FOSRestController {
             $em->persist($receta);
             $em->flush();
             $id = $receta->getId();
+           
+            $info = new InformacionNutricional();
+            $apto_para = $this->getDoctrine()->getRepository("AppBundle:EnfermedadAlimenticia")
+                    ->findAll();
 
             foreach ($ingredientes as $ingrediente) {
                 $item = new ItemReceta;
@@ -49,9 +54,14 @@ class RecetaController extends FOSRestController {
                     $em->persist($item);
                     $em->flush();
                     $receta->addIngrediente($item);
+                    $info->addAll ($item->getIngrediente()->getInfoNutricional(), $item->getCantidad());
+                    $apto_para= $this->join ($apto_para, $item->getIngrediente()->getAptoPara()->toArray());
                 }
             }
-            
+            $receta->setAptoPara($apto_para);
+            $receta->setInfoNutricional($info);
+            $em->persist($receta);
+            $em->flush();
             foreach ($pasos as $paso) {
                 $item = new Paso;
                 $form = $this->createForm(PasoType::class, $item);
@@ -111,6 +121,16 @@ class RecetaController extends FOSRestController {
             throw new BadRequestHttpException('No hay categorías');
 
         return ($categorias);
+    }
+    
+    private function join($array1, $array2) {
+        $output = [];
+        foreach ($array2 as $value) {
+            foreach ($array1 as $value2)
+                if ($value->getId() == $value2->getId())
+                    $output[] = $value;
+        }
+        return $output;
     }
 
 }
