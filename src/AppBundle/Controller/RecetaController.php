@@ -32,6 +32,8 @@ class RecetaController extends FOSRestController {
         $request->request->remove('ingredientes');
         $pasos = $request->get('pasos');
         $request->request->remove('pasos');
+        $creador= $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($request->get('creador'));
+        $request->request->remove('creador');
 
         $receta = new Receta();
         $form = $this->createForm(RecetaType::class, $receta);
@@ -41,6 +43,7 @@ class RecetaController extends FOSRestController {
             $em->persist($receta);
             $em->flush();
             $id = $receta->getId();
+            $receta->setCreador($creador);
            
             $info = new InformacionNutricional();
             $apto_para = $this->getDoctrine()->getRepository("AppBundle:EnfermedadAlimenticia")

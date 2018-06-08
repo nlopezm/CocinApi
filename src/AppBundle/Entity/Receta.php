@@ -116,6 +116,14 @@ class Receta {
      * @Groups({"Receta"})
      */
     protected $info_nutricional;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=true)
+     * @Expose
+     * @Groups({"Receta"})
+     */
+    protected $creador;
 
     function __construct() {
         $this->ingredientes = new ArrayCollection();
@@ -239,6 +247,16 @@ class Receta {
     
     public function setInfoNutricional($info_nutricional) {
         $this->info_nutricional = $info_nutricional;
+        return $this;
+    }
+    
+    public function getCreador() {
+        return $this->creador;
+    }
+    
+    public function setCreador($creador) {
+        $this->creador = $creador;
+        return $this;
     }
 
 }
