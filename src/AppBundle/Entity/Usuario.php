@@ -51,8 +51,8 @@ class Usuario {
     /**
      * @ORM\ManyToMany(targetEntity="Receta")
      * @ORM\JoinTable(name="usuario_favorito",
-     *      joinColumns={@ORM\JoinColumn(name="receta_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="receta_id", referencedColumnName="id")}
      *      )
      * @Expose
      * @Groups({"Usuario"})
