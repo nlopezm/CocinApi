@@ -78,7 +78,7 @@ class Receta {
     protected $video;
 
     /**
-     * @ORM\OneToMany(targetEntity="ItemReceta", mappedBy="receta")
+     * @ORM\OneToMany(targetEntity="ItemReceta", mappedBy="receta", cascade={"remove"})
      * @Expose
      * @Groups({"Receta"})
      */
@@ -111,7 +111,7 @@ class Receta {
     protected $pasos;
 
     /**
-     * @ORM\OneToOne(targetEntity="InformacionNutricional", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="InformacionNutricional", cascade={"persist", "remove"})
      * @Expose
      * @Groups({"Receta"})
      */
@@ -126,7 +126,7 @@ class Receta {
     protected $creador;
 
     /**
-     * @ORM\OneToMany(targetEntity="Puntuacion", mappedBy="receta")
+     * @ORM\OneToMany(targetEntity="Puntuacion", mappedBy="receta", cascade={"remove"})
      * @Expose
      * @Groups({"Receta"})
      */

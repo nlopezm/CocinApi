@@ -101,12 +101,12 @@ class RecetaController extends FOSRestController {
         $em = $this->getDoctrine()->getManager();
 
         $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")
-                ->findBy($id);
+                ->find($id);
         if (!$receta)
             throw new BadRequestHttpException('No existe la receta');
         $em->remove($receta);
         $em->flush();
-        return $usuario;
+        return 200;
     }
 
     /**
