@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\UsuarioType;
+use AppBundle\Entity\Puntuacion;
 
 class UsuarioController extends FOSRestController {
 
@@ -67,7 +68,7 @@ class UsuarioController extends FOSRestController {
 
         return $usuario->getFavoritos();
     }
-    
+
     /**
      * @QueryParam(name="receta")
      * @QueryParam(name="usuario")
@@ -75,7 +76,7 @@ class UsuarioController extends FOSRestController {
      */
     public function deleteFavoritoAction(ParamFetcherInterface $paramFetcher) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($paramFetcher->get('usuario'));
 
         if (!$usuario)
@@ -85,6 +86,56 @@ class UsuarioController extends FOSRestController {
         $em->persist($usuario);
         $em->flush();
         return $usuario;
+    }
+
+    /**
+     * @Post("/puntuacion")
+     */
+    public function postPuntuacionAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")->find($request->get('receta'));
+        $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($request->get('usuario'));
+        if (!$receta)
+            throw new BadRequestHttpException('No existe la receta');
+        if (!$usuario)
+            throw new BadRequestHttpException('No existe el usuario');
+
+        $puntuacion = new Puntuacion();
+        $puntuacion->setUsuario($usuario);
+        $puntuacion->setReceta($receta);
+        $puntuacion->setPuntuacion($request->get('puntuacion'));
+        $em->persist($puntuacion);
+        $em->flush();
+        return $puntuacion;
+    }
+
+    /**
+     * @QueryParam(name="receta")
+     * @QueryParam(name="usuario", strict=true)
+     * @Get("/puntuacion")
+     */
+    public function getPuntuacionAction(ParamFetcherInterface $paramFetcher) {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($paramFetcher->get('receta')) {
+            $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")->find($paramFetcher->get('receta'));
+            if (!$receta)
+                throw new BadRequestHttpException('No existe la receta');
+        }
+        $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($paramFetcher->get('usuario'));
+        if (!$usuario)
+            throw new BadRequestHttpException('No existe el usuario');
+
+        if ($paramFetcher->get('receta'))
+            $puntuaciones = $this->getDoctrine()->getRepository("AppBundle:Puntuacion")->findBy(array('usuario' => $usuario, 'receta' => $receta));
+        else
+            $puntuaciones = $this->getDoctrine()->getRepository("AppBundle:Puntuacion")->findBy(array('usuario' => $usuario));
+
+        if (!sizeof($puntuaciones))
+            throw new BadRequestHttpException('No puntuó');
+
+        return $puntuaciones;
     }
 
 }
