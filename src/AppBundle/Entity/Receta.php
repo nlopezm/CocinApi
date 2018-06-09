@@ -48,7 +48,7 @@ class Receta {
      * @Groups({"Receta"})
      */
     protected $dificultad;
-    
+
     /**
      * @ORM\Column(name="personas", type="integer")
      * @Expose
@@ -109,14 +109,14 @@ class Receta {
      * @Groups({"Receta"})
      */
     protected $pasos;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="InformacionNutricional", cascade={"persist"})
      * @Expose
      * @Groups({"Receta"})
      */
     protected $info_nutricional;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=true)
@@ -125,137 +125,162 @@ class Receta {
      */
     protected $creador;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Puntuacion", mappedBy="receta")
+     * @Expose
+     * @Groups({"Receta"})
+     */
+    protected $puntuaciones;
+
     function __construct() {
         $this->ingredientes = new ArrayCollection();
         $this->apto_para = new ArrayCollection();
         $this->pasos = new ArrayCollection();
+        $this->puntuaciones = new ArrayCollection();
     }
 
-    function getId() {
+    public function getId() {
         return $this->id;
     }
 
-    function getNombre() {
+    public function getNombre() {
         return $this->nombre;
     }
 
-    function getDescripcion() {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
-    function getDificultad() {
+    public function getDificultad() {
         return $this->dificultad;
     }
-    
-    function getPersonas() {
+
+    public function getPersonas() {
         return $this->personas;
     }
 
-    function getTiempo() {
+    public function getTiempo() {
         return $this->tiempo;
     }
 
-    function getImagenes() {
+    public function getImagenes() {
         return $this->imagenes;
     }
 
-    function getVideo() {
+    public function getVideo() {
         return $this->video;
     }
 
     public function getIngredientes() {
-        $ingredientes = array();
-        foreach ($this->ingredientes as $ingrediente) {
-            array_push($ingredientes, $ingrediente->getIngrediente());
-        }
-        return $ingredientes;
+        return $this->ingredientes;
     }
 
-    function getCategoria() {
+    public function getCategoria() {
         return $this->categoria;
     }
 
-    function getAptoPara() {
+    public function getAptoPara() {
         return $this->apto_para;
     }
 
-    function getPasos() {
+    public function getPasos() {
         return $this->pasos;
     }
 
-    function setId($id) {
+    public function getInfoNutricional() {
+        return $this->info_nutricional;
+    }
+
+    public function getCreador() {
+        return $this->creador;
+    }
+
+    public function getPuntuaciones() {
+        return $this->puntuaciones;
+    }
+
+    public function setId($id) {
         $this->id = $id;
+        return $this;
     }
 
-    function setNombre($nombre) {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
+        return $this;
     }
 
-    function setDescripcion($descripcion) {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
+        return $this;
     }
 
-    function setDificultad($dificultad) {
+    public function setDificultad($dificultad) {
         $this->dificultad = $dificultad;
+        return $this;
     }
-    
-    function setPersonas($personas) {
+
+    public function setPersonas($personas) {
         $this->personas = $personas;
+        return $this;
     }
 
-    function setTiempo($tiempo) {
+    public function setTiempo($tiempo) {
         $this->tiempo = $tiempo;
+        return $this;
     }
 
-    function setImagenes($imagenes) {
+    public function setImagenes($imagenes) {
         $this->imagenes = $imagenes;
+        return $this;
     }
 
-    function setVideo($video) {
+    public function setVideo($video) {
         $this->video = $video;
+        return $this;
     }
 
-    function setIngredientes($ingredientes) {
+    public function setIngredientes($ingredientes) {
         $this->ingredientes = $ingredientes;
+        return $this;
     }
 
-    function setCategoria($categoria) {
+    public function setCategoria($categoria) {
         $this->categoria = $categoria;
+        return $this;
     }
 
-    function setAptoPara($apto_para) {
+    public function setAptoPara($apto_para) {
         $this->apto_para = $apto_para;
+        return $this;
     }
 
-    function setPasos($pasos) {
+    public function setPasos($pasos) {
         $this->pasos = $pasos;
+        return $this;
+    }
+
+    public function setInfoNutricional($info_nutricional) {
+        $this->info_nutricional = $info_nutricional;
+        return $this;
+    }
+
+    public function setCreador($creador) {
+        $this->creador = $creador;
+        return $this;
+    }
+
+    public function setPuntuaciones($puntuaciones) {
+        $this->puntuaciones = $puntuaciones;
+        return $this;
     }
 
     public function addIngrediente($item) {
         $this->ingredientes[] = $item;
         return $this;
     }
-    
+
     public function addPaso($item) {
         $this->pasos[] = $item;
-        return $this;
-    }
-    
-    public function getInfoNutricional() {
-        return $this->info_nutricional;
-    }
-    
-    public function setInfoNutricional($info_nutricional) {
-        $this->info_nutricional = $info_nutricional;
-        return $this;
-    }
-    
-    public function getCreador() {
-        return $this->creador;
-    }
-    
-    public function setCreador($creador) {
-        $this->creador = $creador;
         return $this;
     }
 
