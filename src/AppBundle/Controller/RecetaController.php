@@ -93,6 +93,21 @@ class RecetaController extends FOSRestController {
 
         return ($recetas);
     }
+    
+    /**
+     * @Delete("/{id}")
+     */
+    public function deleteRecetaAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")
+                ->findBy($id);
+        if (!$receta)
+            throw new BadRequestHttpException('No existe la receta');
+        $em->remove($receta);
+        $em->flush();
+        return $usuario;
+    }
 
     /**
      * @Post("/categoria")
