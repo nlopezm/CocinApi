@@ -44,8 +44,6 @@ class Ingrediente {
 
     /**
      * @ORM\OneToOne(targetEntity="InformacionNutricional", cascade={"persist"})
-     * @Expose
-     * @Groups({"Ingrediente"})
      */
     protected $info_nutricional;
 
@@ -63,8 +61,6 @@ class Ingrediente {
      *      joinColumns={@ORM\JoinColumn(name="ingrediente_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="enfermedad_id", referencedColumnName="id")}
      *      )
-     * @Expose
-     * @Groups({"Ingrediente"})
      */
     protected $apto_para;
 

@@ -65,14 +65,16 @@ class RecetaController extends FOSRestController {
             $receta->setInfoNutricional($info);
             $em->persist($receta);
             $em->flush();
-            foreach ($pasos as $paso) {
-                $item = new Paso;
-                $form = $this->createForm(PasoType::class, $item);
-                $form->submit(array('nombre' => $paso['nombre'], 'descripcion' => $paso['descripcion'], 'receta' => $id));
-                if ($form->isValid()) {
-                    $em->persist($item);
-                    $em->flush();
-                    $receta->addPaso($item);
+            if ($pasos) {
+                foreach ($pasos as $paso) {
+                    $item = new Paso;
+                    $form = $this->createForm(PasoType::class, $item);
+                    $form->submit(array('nombre' => $paso['nombre'], 'descripcion' => $paso['descripcion'], 'receta' => $id));
+                    if ($form->isValid()) {
+                        $em->persist($item);
+                        $em->flush();
+                        $receta->addPaso($item);
+                    }
                 }
             }
             return $receta;
