@@ -100,7 +100,13 @@ class UsuarioController extends FOSRestController {
             throw new BadRequestHttpException('No existe la receta');
         if (!$usuario)
             throw new BadRequestHttpException('No existe el usuario');
-
+        
+        $puntuacion = $this->getDoctrine()->getRepository("AppBundle:Puntuacion")->findOneBy(array('receta' => $receta, 'usuario' => $usuario));
+        if ($puntuacion) {
+            $puntuacion->setPuntuacion($request->get('puntuacion'));
+            $em->flush();
+            return $puntuacion;
+        }
         $puntuacion = new Puntuacion();
         $puntuacion->setUsuario($usuario);
         $puntuacion->setReceta($receta);
