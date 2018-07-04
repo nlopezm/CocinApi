@@ -23,8 +23,7 @@ class RecetaListener {
             $entity->setImagenes($imagenes);
 
             $video = $entity->getVideo();
-            $video = str_replace("https://www.youtube.com/watch?v=", "", $video);
-            $entity->setVideo('https://www.youtube.com/embed/' . $video);
+            $entity->setVideo(str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", $video));
         }
 
         $entityManager = $args->getEntityManager();
