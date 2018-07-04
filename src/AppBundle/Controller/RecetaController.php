@@ -32,7 +32,7 @@ class RecetaController extends FOSRestController {
         $request->request->remove('ingredientes');
         $pasos = $request->get('pasos');
         $request->request->remove('pasos');
-        $creador= $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($request->get('creador'));
+        $creador = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($request->get('creador'));
         $request->request->remove('creador');
 
         $receta = new Receta();
@@ -44,7 +44,7 @@ class RecetaController extends FOSRestController {
             $em->flush();
             $id = $receta->getId();
             $receta->setCreador($creador);
-           
+
             $info = new InformacionNutricional();
             $apto_para = $this->getDoctrine()->getRepository("AppBundle:EnfermedadAlimenticia")
                     ->findAll();
@@ -57,8 +57,8 @@ class RecetaController extends FOSRestController {
                     $em->persist($item);
                     $em->flush();
                     $receta->addIngrediente($item);
-                    $info->addAll ($item->getIngrediente()->getInfoNutricional(), $item->getCantidad());
-                    $apto_para= $this->join ($apto_para, $item->getIngrediente()->getAptoPara()->toArray());
+                    $info->addAll($item->getIngrediente()->getInfoNutricional(), $item->getCantidad());
+                    $apto_para = $this->join($apto_para, $item->getIngrediente()->getAptoPara()->toArray());
                 }
             }
             $receta->setAptoPara($apto_para);
@@ -95,7 +95,7 @@ class RecetaController extends FOSRestController {
 
         return ($recetas);
     }
-    
+
     /**
      * @Delete("/{id}")
      */
@@ -106,6 +106,11 @@ class RecetaController extends FOSRestController {
                 ->find($id);
         if (!$receta)
             throw new BadRequestHttpException('No existe la receta');
+        $usuarios = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findAll();
+        $query = 'delete FROM usuario_favorito where receta_id = ' . $id;
+        $statement = $em->getConnection()->prepare($query);
+        $statement->execute();
+
         $em->remove($receta);
         $em->flush();
         return 200;
@@ -142,7 +147,7 @@ class RecetaController extends FOSRestController {
 
         return ($categorias);
     }
-    
+
     private function join($array1, $array2) {
         $output = [];
         foreach ($array2 as $value) {
