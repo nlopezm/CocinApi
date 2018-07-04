@@ -22,6 +22,7 @@ class UsuarioController extends FOSRestController {
      * @Post("")
      */
     public function postUsuarioAction(Request $request) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp(). " POST USUARIO");
         $em = $this->getDoctrine()->getManager();
 
         $usuario = new Usuario();
@@ -41,6 +42,7 @@ class UsuarioController extends FOSRestController {
      * @Post("/favorito")
      */
     public function postFavoritoAction(Request $request) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp(). " POST FAVORITO ");
         $em = $this->getDoctrine()->getManager();
 
         $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")->find($request->get('receta'));
@@ -60,6 +62,7 @@ class UsuarioController extends FOSRestController {
      * @Get("/favorito/{email}")
      */
     public function getFavoritosAction($email) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp(). " GET FAVORITOS ". json_encode($email));
         $em = $this->getDoctrine()->getManager();
 
         $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($email);
@@ -75,6 +78,7 @@ class UsuarioController extends FOSRestController {
      * @Delete("/favorito")
      */
     public function deleteFavoritoAction(ParamFetcherInterface $paramFetcher) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp(). " DELETE FAVORITO ");
         $em = $this->getDoctrine()->getManager();
 
         $usuario = $this->getDoctrine()->getRepository("AppBundle:Usuario")->findOneByMail($paramFetcher->get('usuario'));
@@ -92,6 +96,7 @@ class UsuarioController extends FOSRestController {
      * @Post("/puntuacion")
      */
     public function postPuntuacionAction(Request $request) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp(). " POST PUNTUACIÓN ");
         $em = $this->getDoctrine()->getManager();
 
         $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")->find($request->get('receta'));

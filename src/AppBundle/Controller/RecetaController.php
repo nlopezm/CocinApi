@@ -27,6 +27,7 @@ class RecetaController extends FOSRestController {
      * @Post("")
      */
     public function postRecetaAction(Request $request) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp()." POST RECETA");
         $em = $this->getDoctrine()->getManager();
         $ingredientes = $request->get('ingredientes');
         $request->request->remove('ingredientes');
@@ -87,6 +88,7 @@ class RecetaController extends FOSRestController {
      * @Get("")
      */
     public function getRecetasAction() {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp()." GET RECETAS");
 
         $recetas = $this->getDoctrine()->getRepository("AppBundle:Receta")
                 ->findAll();
@@ -100,6 +102,7 @@ class RecetaController extends FOSRestController {
      * @Delete("/{id}")
      */
     public function deleteRecetaAction($id) {
+        $this->container->get('monolog.logger.conexiones')->info($this->container->get('request_stack')->getCurrentRequest()->getClientIp()." DELETE RECETA ".$id);
         $em = $this->getDoctrine()->getManager();
 
         $receta = $this->getDoctrine()->getRepository("AppBundle:Receta")
